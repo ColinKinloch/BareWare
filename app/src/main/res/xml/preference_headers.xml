@@ -1,0 +1,12 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+  <header
+    android:fragment="org.kinloch.colin.wear.bare.config.ConfigActivity$AlarmConfigFragment"
+    android:title="Alarm"
+    android:summary="Interval Alarm"
+    />
+  <header
+    android:fragment="org.kinloch.colin.wear.bare.config.ConfigActivity$OtherConfigFragment"
+    android:title="Other"
+    android:summary="Other Settings"
+    />
+</preference-headers>

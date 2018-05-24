@@ -1,0 +1,24 @@
+[package]
+name = "gfx_face"
+version = "0.1.0"
+authors = ["Colin Kinloch <colin@kinlo.ch>"]
+build = "build.rs"
+
+[lib]
+crate-type = ["dylib"]
+
+[dependencies]
+lazy_static = "1.0"
+rand = "0.4.2"
+# gfx = "0.16"
+# gfx_window_glutin = "*"
+gfx_device_gl = "*"
+# glutin = "*"
+winit = "0.14"
+egli = "0.4"
+
+# gfx-hal = { git = "https://github.com/gfx-rs/gfx.git" }
+
+[target.'cfg(target_os = "android")'.dependencies]
+android_glue = "0.2"
+android_injected_glue = "0.2"

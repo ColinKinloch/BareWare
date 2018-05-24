@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="BareTheme" parent="@android:style/Theme.DeviceDefault">
+  </style>
+  <style name="BareTheme.Config" parent="BareTheme">
+  </style>
+</resources>

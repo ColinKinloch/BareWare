@@ -1,0 +1,93 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+  compileSdkVersion 27
+  defaultConfig {
+    applicationId "org.kinloch.colin.wear.bare"
+    minSdkVersion 23
+    targetSdkVersion 26
+    versionCode 1
+    versionName "1.0"
+    multiDexEnabled false
+  }
+  
+  sourceSets {
+    main {
+      jniLibs {
+        srcDir 'src/main/libs'
+      }
+    }
+  }
+  
+  buildTypes {
+    debug {
+      minifyEnabled false
+      useProguard false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+    release {
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+  
+  task cargoClean(type: Exec, description: 'Clean rust') {
+    workingDir 'gfx_face'
+    
+    commandLine 'cargo', 'clean'
+  }
+  
+  task cargoBuild(type: Exec, description: 'Compile rust') {
+    workingDir 'gfx_face'
+    
+    // environment 'CC_armv7_linux_androideabi', System.env.NDK_HOME + 'toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-gcc'
+    // environment 'CC', System.env.NDK_HOME + 'toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-gcc'
+    environment 'PATH', System.env.NDK_HOME + 'toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/:' + System.env.PATH
+    // environment 'CC', 'arm-linux-androideabi-gcc'
+    
+    
+    // commandLine 'cargo',
+    //   'build',
+    //   '--target', 'arm-linux-androideabi',
+    //   '--release'
+    
+    commandLine 'cargo',
+      'build',
+      '--target', 'armv7-linux-androideabi',
+      '--release'
+    
+    // commandLine 'cargo',
+    //   'build',
+    //   '--target', 'aarch64-linux-android',
+    //   '--release'
+    
+  }
+  
+  task cargoCopy(type: Copy) {
+    include '*.so'
+    
+    from 'gfx_face/target/armv7-linux-androideabi/release'
+    into 'src/main/libs/armeabi-v7a'
+    
+    // from 'gfx_face/target/arm-linux-androideabi/release'
+    // into 'src/main/libs/armeabi'
+    
+    // from 'gfx_face/target/armv7-linux-androideabi/release'
+    // into 'src/main/libs/aarch64'
+  }
+  
+  cargoBuild.finalizedBy cargoCopy
+  // cargoCopy.dependsOn cargoBuild
+  
+  clean.dependsOn cargoClean
+  
+  tasks.withType(JavaCompile) {
+    compileTask -> compileTask.dependsOn cargoBuild
+  }
+}
+
+
+dependencies {
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+}

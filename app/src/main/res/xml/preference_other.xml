@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <EditTextPreference
+    android:key="screen_scale"
+    android:title="Scale"
+    android:inputType="number"
+    android:defaultValue="2"
+    />
+  <EditTextPreference
+    android:key="background_alpha"
+    android:title="Alpha"
+    android:inputType="numberDecimal"
+    android:defaultValue="0.004"
+    />
+  <CheckBoxPreference
+    android:key="pref_sync"
+    android:title="Check this out"
+    android:summary="Summer time"
+    android:defaultValue="true"
+    />
+  <Preference
+    android:key="pref_key_sms_delete_limit"
+    android:summary="How bout these apples"
+    android:title="Thesee apple"
+    />
+</PreferenceScreen>
